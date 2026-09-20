@@ -28,7 +28,7 @@ function OptionGroup({ label, options, value, onChange }) {
 
   return (
     <div className="space-y-3">
-      <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">
+      <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
         {label}
       </p>
       <div className="grid gap-3 sm:grid-cols-3">
@@ -42,8 +42,8 @@ function OptionGroup({ label, options, value, onChange }) {
               onClick={() => onChange(option)}
               className={`rounded-md border px-4 py-3 text-sm font-semibold transition ${
                 isSelected
-                  ? 'border-blue-500 bg-blue-500/15 text-blue-300'
-                  : 'border-gray-800 bg-gray-950 text-slate-300 hover:border-blue-500/40 hover:text-white'
+                  ? 'border-blue-500 bg-blue-500/15 text-blue-700'
+                  : 'border-gray-200 bg-gray-50 text-gray-500 hover:border-blue-500/40 hover:text-gray-900'
               }`}
             >
               {formatOption(option)}
@@ -100,23 +100,23 @@ export default function InterviewSetup() {
   }
 
   return (
-    <div className="bg-gray-950 px-4 py-12 text-slate-100">
+    <div className="bg-gray-50 px-4 py-12 text-gray-900">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
-        <section className="rounded-md border border-gray-800 bg-gray-900 p-6">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">
+        <section className="rounded-md border border-gray-200 bg-white p-6">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
             Interview setup
           </p>
-          <h1 className="mt-3 text-4xl font-bold tracking-tight text-white">
+          <h1 className="mt-3 text-4xl font-bold tracking-tight text-gray-900">
             Configure your session
           </h1>
-          <p className="mt-4 max-w-3xl text-base leading-7 text-slate-300">
+          <p className="mt-4 max-w-3xl text-base leading-7 text-gray-500">
             {selectedCategory?.name
               ? `Preparing questions for ${selectedCategory.name}.`
               : 'Choose your interview preferences before starting.'}
           </p>
         </section>
 
-        <div className="grid gap-6 rounded-md border border-gray-800 bg-gray-900 p-6">
+        <div className="grid gap-6 rounded-md border border-gray-200 bg-white p-6">
           <OptionGroup
             label="Difficulty"
             options={difficultyOptions}
@@ -141,7 +141,7 @@ export default function InterviewSetup() {
           {questionCountOption === 'custom' ? (
             <div className="max-w-xs space-y-2">
               <label
-                className="block text-sm font-medium text-slate-200"
+                className="block text-sm font-medium text-gray-700"
                 htmlFor="customNumQuestions"
               >
                 Custom number of questions
@@ -156,12 +156,12 @@ export default function InterviewSetup() {
                   setCustomNumQuestions(event.target.value)
                   setNumQuestionsError('')
                 }}
-                className="w-full rounded-md border border-gray-800 bg-gray-950 px-4 py-3 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
+                className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
                 placeholder="12"
               />
-              <p className="text-sm text-slate-400">Choose between 1 and 30.</p>
+              <p className="text-sm text-gray-500">Choose between 1 and 30.</p>
               {numQuestionsError ? (
-                <p className="text-sm text-red-200">{numQuestionsError}</p>
+                <p className="text-sm text-red-700">{numQuestionsError}</p>
               ) : null}
             </div>
           ) : null}
@@ -171,7 +171,7 @@ export default function InterviewSetup() {
           <button
             type="button"
             onClick={handleStart}
-            className="rounded-md bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
+            className="rounded-md bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
           >
             Start Interview
           </button>
@@ -180,4 +180,6 @@ export default function InterviewSetup() {
     </div>
   )
 }
+
+
 

@@ -20,7 +20,7 @@ import Signup from './pages/Signup'
 
 function Shell({ children }) {
   return (
-    <div className="min-h-screen bg-gray-950 text-slate-100">
+    <div className="min-h-screen bg-gray-50 text-gray-900">
       <Sidebar />
       <div className="ml-64 flex min-h-screen flex-col">
         <main className="flex-1 overflow-y-auto">{children}</main>
@@ -67,6 +67,8 @@ function App() {
 }
 
 export default App
+
+
 
 
 

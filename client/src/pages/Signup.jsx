@@ -113,21 +113,21 @@ export default function Signup() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-950 px-4 py-12">
-      <div className="w-full max-w-md rounded-md border border-gray-800 bg-gray-900 p-6">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12">
+      <div className="w-full max-w-md rounded-md border border-gray-200 bg-white p-6">
         <div className="mb-8 text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
             AI Interview Prep
           </p>
-          <h1 className="mt-2 text-3xl font-bold text-white">Create account</h1>
-          <p className="mt-2 text-sm text-slate-400">
+          <h1 className="mt-2 text-3xl font-bold text-gray-900">Create account</h1>
+          <p className="mt-2 text-sm text-gray-500">
             Start preparing with a focused interview workflow.
           </p>
         </div>
 
         <form className="space-y-5" onSubmit={handleSubmit} noValidate>
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-200" htmlFor="name">
+            <label className="mb-2 block text-sm font-medium text-gray-700" htmlFor="name">
               Name
             </label>
             <input
@@ -138,14 +138,14 @@ export default function Signup() {
                 setName(event.target.value)
                 setNameError('')
               }}
-              className="w-full rounded-md border border-gray-800 bg-gray-950 px-4 py-3 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
+              className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
               placeholder="Your name"
             />
-            {nameError ? <p className="mt-2 text-sm text-red-200">{nameError}</p> : null}
+            {nameError ? <p className="mt-2 text-sm text-red-700">{nameError}</p> : null}
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-200" htmlFor="email">
+            <label className="mb-2 block text-sm font-medium text-gray-700" htmlFor="email">
               Email
             </label>
             <input
@@ -156,15 +156,15 @@ export default function Signup() {
                 setEmail(event.target.value.toLowerCase())
                 setEmailError('')
               }}
-              className="w-full rounded-md border border-gray-800 bg-gray-950 px-4 py-3 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
+              className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
               placeholder="you@example.com"
               required
             />
-            {emailError ? <p className="mt-2 text-sm text-red-200">{emailError}</p> : null}
+            {emailError ? <p className="mt-2 text-sm text-red-700">{emailError}</p> : null}
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-200" htmlFor="password">
+            <label className="mb-2 block text-sm font-medium text-gray-700" htmlFor="password">
               Password
             </label>
             <div className="relative">
@@ -177,7 +177,7 @@ export default function Signup() {
                   setPasswordError('')
                   setConfirmPasswordError('')
                 }}
-                className="w-full rounded-md border border-gray-800 bg-gray-950 px-4 py-3 pr-12 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
+                className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-3 pr-12 text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
                 placeholder="Create a password"
                 minLength={8}
                 required
@@ -185,7 +185,7 @@ export default function Signup() {
               <button
                 type="button"
                 onClick={() => setShowPassword((current) => !current)}
-                className="absolute inset-y-0 right-3 flex items-center text-slate-400 transition hover:text-blue-400"
+                className="absolute inset-y-0 right-3 flex items-center text-gray-500 transition hover:text-blue-600"
                 aria-label={showPassword ? 'Hide password' : 'Show password'}
               >
                 {showPassword ? (
@@ -203,12 +203,12 @@ export default function Signup() {
                 )}
               </button>
             </div>
-            {passwordError ? <p className="mt-2 text-sm text-red-200">{passwordError}</p> : null}
+            {passwordError ? <p className="mt-2 text-sm text-red-700">{passwordError}</p> : null}
           </div>
 
           <div>
             <label
-              className="mb-2 block text-sm font-medium text-slate-200"
+              className="mb-2 block text-sm font-medium text-gray-700"
               htmlFor="confirmPassword"
             >
               Confirm Password
@@ -222,7 +222,7 @@ export default function Signup() {
                   setConfirmPassword(event.target.value)
                   setConfirmPasswordError('')
                 }}
-                className="w-full rounded-md border border-gray-800 bg-gray-950 px-4 py-3 pr-12 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
+                className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-3 pr-12 text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
                 placeholder="Confirm your password"
                 minLength={8}
                 required
@@ -230,7 +230,7 @@ export default function Signup() {
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword((current) => !current)}
-                className="absolute inset-y-0 right-3 flex items-center text-slate-400 transition hover:text-blue-400"
+                className="absolute inset-y-0 right-3 flex items-center text-gray-500 transition hover:text-blue-600"
                 aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
               >
                 {showConfirmPassword ? (
@@ -249,12 +249,12 @@ export default function Signup() {
               </button>
             </div>
             {confirmPasswordError ? (
-              <p className="mt-2 text-sm text-red-200">{confirmPasswordError}</p>
+              <p className="mt-2 text-sm text-red-700">{confirmPasswordError}</p>
             ) : null}
           </div>
 
           {error ? (
-            <div className="rounded-md border border-red-900/50 bg-red-950/40 px-4 py-3 text-sm text-red-200">
+            <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
               {error}
             </div>
           ) : null}
@@ -262,18 +262,18 @@ export default function Signup() {
           <button
             type="submit"
             disabled={loading}
-            className="flex w-full items-center justify-center rounded-md bg-blue-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-70"
+            className="flex w-full items-center justify-center rounded-md bg-blue-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
           >
             {loading ? 'Creating account...' : 'Sign up'}
           </button>
         </form>
 
         <div className="my-6 flex items-center gap-4">
-          <div className="h-px flex-1 bg-slate-800" />
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+          <div className="h-px flex-1 bg-gray-100" />
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
             or
           </span>
-          <div className="h-px flex-1 bg-slate-800" />
+          <div className="h-px flex-1 bg-gray-100" />
         </div>
 
         <div className="flex justify-center">
@@ -289,12 +289,12 @@ export default function Signup() {
         </div>
 
         {googleLoading ? (
-          <p className="mt-3 text-center text-xs text-slate-400">Signing in with Google...</p>
+          <p className="mt-3 text-center text-xs text-gray-500">Signing in with Google...</p>
         ) : null}
 
-        <p className="mt-6 text-center text-sm text-slate-400">
+        <p className="mt-6 text-center text-sm text-gray-500">
           Already have an account?{' '}
-          <Link className="font-semibold text-blue-400 hover:text-blue-300" to="/login">
+          <Link className="font-semibold text-blue-600 hover:text-blue-700" to="/login">
             Log in
           </Link>
         </p>
@@ -302,4 +302,6 @@ export default function Signup() {
     </div>
   )
 }
+
+
 

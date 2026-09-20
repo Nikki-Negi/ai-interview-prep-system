@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 html {
   color-scheme: dark;
@@ -16,5 +16,6 @@ body {
 #root {
   min-height: 100vh;
 }
+
 
 

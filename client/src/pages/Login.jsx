@@ -98,21 +98,21 @@ export default function Login() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-950 px-4 py-12">
-      <div className="w-full max-w-md rounded-md border border-gray-800 bg-gray-900 p-6">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12">
+      <div className="w-full max-w-md rounded-md border border-gray-200 bg-white p-6">
         <div className="mb-8 text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
             AI Interview Prep
           </p>
-          <h1 className="mt-2 text-3xl font-bold text-white">Welcome back</h1>
-          <p className="mt-2 text-sm text-slate-400">
+          <h1 className="mt-2 text-3xl font-bold text-gray-900">Welcome back</h1>
+          <p className="mt-2 text-sm text-gray-500">
             Log in to continue your interview practice.
           </p>
         </div>
 
         <form className="space-y-5" onSubmit={handleSubmit} noValidate>
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-200" htmlFor="email">
+            <label className="mb-2 block text-sm font-medium text-gray-700" htmlFor="email">
               Email
             </label>
             <input
@@ -123,15 +123,15 @@ export default function Login() {
                 setEmail(event.target.value.toLowerCase())
                 setEmailError('')
               }}
-              className="w-full rounded-md border border-gray-800 bg-gray-950 px-4 py-3 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
+              className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
               placeholder="you@example.com"
               required
             />
-            {emailError ? <p className="mt-2 text-sm text-red-200">{emailError}</p> : null}
+            {emailError ? <p className="mt-2 text-sm text-red-700">{emailError}</p> : null}
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-200" htmlFor="password">
+            <label className="mb-2 block text-sm font-medium text-gray-700" htmlFor="password">
               Password
             </label>
             <div className="relative">
@@ -140,14 +140,14 @@ export default function Login() {
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                className="w-full rounded-md border border-gray-800 bg-gray-950 px-4 py-3 pr-12 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
+                className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-3 pr-12 text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
                 placeholder="Your password"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword((current) => !current)}
-                className="absolute inset-y-0 right-3 flex items-center text-slate-400 transition hover:text-blue-400"
+                className="absolute inset-y-0 right-3 flex items-center text-gray-500 transition hover:text-blue-600"
                 aria-label={showPassword ? 'Hide password' : 'Show password'}
               >
                 {showPassword ? (
@@ -167,18 +167,18 @@ export default function Login() {
             </div>
           </div>
 
-          <label className="flex items-center gap-3 text-sm text-slate-300">
+          <label className="flex items-center gap-3 text-sm text-gray-500">
             <input
               type="checkbox"
               checked={rememberMe}
               onChange={(event) => setRememberMe(event.target.checked)}
-              className="h-4 w-4 rounded border-gray-700 bg-gray-950 text-blue-500 accent-blue-500"
+              className="h-4 w-4 rounded border-gray-300 bg-gray-50 text-blue-500 accent-blue-500"
             />
             Keep me signed in
           </label>
 
           {error ? (
-            <div className="rounded-md border border-red-900/50 bg-red-950/40 px-4 py-3 text-sm text-red-200">
+            <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
               {error}
             </div>
           ) : null}
@@ -186,18 +186,18 @@ export default function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="flex w-full items-center justify-center rounded-md bg-blue-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-70"
+            className="flex w-full items-center justify-center rounded-md bg-blue-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
           >
             {loading ? 'Signing in...' : 'Log in'}
           </button>
         </form>
 
         <div className="my-6 flex items-center gap-4">
-          <div className="h-px flex-1 bg-slate-800" />
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+          <div className="h-px flex-1 bg-gray-100" />
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
             or
           </span>
-          <div className="h-px flex-1 bg-slate-800" />
+          <div className="h-px flex-1 bg-gray-100" />
         </div>
 
         <div className="flex justify-center">
@@ -213,12 +213,12 @@ export default function Login() {
         </div>
 
         {googleLoading ? (
-          <p className="mt-3 text-center text-xs text-slate-400">Signing in with Google...</p>
+          <p className="mt-3 text-center text-xs text-gray-500">Signing in with Google...</p>
         ) : null}
 
-        <p className="mt-6 text-center text-sm text-slate-400">
+        <p className="mt-6 text-center text-sm text-gray-500">
           New here?{' '}
-          <Link className="font-semibold text-blue-400 hover:text-blue-300" to="/signup">
+          <Link className="font-semibold text-blue-600 hover:text-blue-700" to="/signup">
             Create an account
           </Link>
         </p>
@@ -226,4 +226,6 @@ export default function Login() {
     </div>
   )
 }
+
+
 

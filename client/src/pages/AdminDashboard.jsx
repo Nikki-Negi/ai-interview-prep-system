@@ -63,13 +63,13 @@ export default function AdminDashboard() {
 
   if (!userEmail) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-950 px-4 text-slate-100">
-      <div className="w-full max-w-xl rounded-md border border-gray-800 bg-gray-900 p-6 text-center">
-        <h1 className="text-3xl font-bold text-white">No session found</h1>
-          <p className="mt-3 text-slate-300">Please log in to continue.</p>
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 text-gray-900">
+      <div className="w-full max-w-xl rounded-md border border-gray-200 bg-white p-6 text-center">
+        <h1 className="text-3xl font-bold text-gray-900">No session found</h1>
+          <p className="mt-3 text-gray-500">Please log in to continue.</p>
           <Link
             to="/login"
-            className="mt-6 inline-flex rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
+            className="mt-6 inline-flex rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
           >
             Go to Login
           </Link>
@@ -80,10 +80,10 @@ export default function AdminDashboard() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-950 px-4 text-slate-100">
-        <div className="rounded-md border border-gray-800 bg-gray-900 p-6 text-center">
-          <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-md border-4 border-gray-800 border-t-gray-500" />
-          <p className="text-sm font-medium text-slate-300">Checking admin access...</p>
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 text-gray-900">
+        <div className="rounded-md border border-gray-200 bg-white p-6 text-center">
+          <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-md border-4 border-gray-200 border-t-gray-400" />
+          <p className="text-sm font-medium text-gray-500">Checking admin access...</p>
         </div>
       </div>
     )
@@ -91,15 +91,15 @@ export default function AdminDashboard() {
 
   if (!isAdmin) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-950 px-4 text-slate-100">
-      <div className="w-full max-w-xl rounded-md border border-gray-800 bg-gray-900 p-6 text-center">
-        <h1 className="text-3xl font-bold text-white">Access denied</h1>
-          <p className="mt-3 text-slate-300">
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 text-gray-900">
+      <div className="w-full max-w-xl rounded-md border border-gray-200 bg-white p-6 text-center">
+        <h1 className="text-3xl font-bold text-gray-900">Access denied</h1>
+          <p className="mt-3 text-gray-500">
             You do not have permission to view this page.
           </p>
           <Link
             to="/dashboard"
-            className="mt-6 inline-flex rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
+            className="mt-6 inline-flex rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
           >
             Back to Dashboard
           </Link>
@@ -109,57 +109,57 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="bg-gray-950 px-4 py-12 text-slate-100">
+    <div className="bg-gray-50 px-4 py-12 text-gray-900">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
-        <div className="rounded-md border border-gray-800 bg-gray-900 p-6">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">
+        <div className="rounded-md border border-gray-200 bg-white p-6">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
             Admin dashboard
           </p>
-          <h1 className="mt-3 text-4xl font-bold text-white">
+          <h1 className="mt-3 text-4xl font-bold text-gray-900">
             System overview
           </h1>
         </div>
 
         {error ? (
-          <div className="rounded-md border border-red-900/50 bg-red-950/40 p-6">
-            <p className="text-sm font-semibold text-red-300">Something went wrong</p>
-            <p className="mt-2 text-sm text-red-200">{error}</p>
+          <div className="rounded-md border border-red-200 bg-red-50 p-6">
+            <p className="text-sm font-semibold text-red-700">Something went wrong</p>
+            <p className="mt-2 text-sm text-red-700">{error}</p>
           </div>
         ) : null}
 
         <div className="grid gap-6 xl:grid-cols-2">
-          <div className="overflow-hidden rounded-md border border-gray-800 bg-gray-900">
-            <div className="border-b border-gray-800 px-6 py-4">
-              <h2 className="text-xl font-bold text-white">All users</h2>
+          <div className="overflow-hidden rounded-md border border-gray-200 bg-white">
+            <div className="border-b border-gray-200 px-6 py-4">
+              <h2 className="text-xl font-bold text-gray-900">All users</h2>
             </div>
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-slate-800">
-                <thead className="bg-gray-950/60">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50/60">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
                       Name
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
                       Email
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
                       Joined
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
                       Actions
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800 bg-gray-900">
+                <tbody className="divide-y divide-gray-200 bg-white">
                   {users.map((item) => (
                     <tr key={`${item.email}-${item.created_at}`}>
-                      <td className="px-6 py-4 text-sm font-medium text-white">
+                      <td className="px-6 py-4 text-sm font-medium text-gray-900">
                         {item.name}
                       </td>
-                      <td className="px-6 py-4 text-sm text-slate-300">
+                      <td className="px-6 py-4 text-sm text-gray-500">
                         {item.email}
                       </td>
-                      <td className="px-6 py-4 text-sm text-slate-300">
+                      <td className="px-6 py-4 text-sm text-gray-500">
                         {formatDate(item.created_at)}
                       </td>
                       <td className="px-6 py-4 text-sm">
@@ -197,7 +197,7 @@ export default function AdminDashboard() {
                             {deletingEmail === item.email ? 'Deleting...' : 'Delete'}
                           </button>
                         ) : (
-                          <span className="text-xs font-medium text-slate-400">
+                          <span className="text-xs font-medium text-gray-500">
                             Current admin
                           </span>
                         )}
@@ -209,41 +209,41 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-md border border-gray-800 bg-gray-900">
-            <div className="border-b border-gray-800 px-6 py-4">
-              <h2 className="text-xl font-bold text-white">All interviews</h2>
+          <div className="overflow-hidden rounded-md border border-gray-200 bg-white">
+            <div className="border-b border-gray-200 px-6 py-4">
+              <h2 className="text-xl font-bold text-gray-900">All interviews</h2>
             </div>
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-slate-800">
-                <thead className="bg-gray-950/60">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50/60">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
                       User Email
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
                       Category
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
                       Avg Score
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+                    <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
                       Date
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800 bg-gray-900">
+                <tbody className="divide-y divide-gray-200 bg-white">
                   {interviews.map((item) => (
                     <tr key={`${item.id}-${item.completed_at}`}>
-                      <td className="px-6 py-4 text-sm text-slate-300">
+                      <td className="px-6 py-4 text-sm text-gray-500">
                         {item.user_email}
                       </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white">
+                      <td className="px-6 py-4 text-sm font-medium text-gray-900">
                         {item.category}
                       </td>
-                      <td className="px-6 py-4 text-sm text-slate-300">
+                      <td className="px-6 py-4 text-sm text-gray-500">
                         {Number(item.average_score || 0).toFixed(1)}
                       </td>
-                      <td className="px-6 py-4 text-sm text-slate-300">
+                      <td className="px-6 py-4 text-sm text-gray-500">
                         {formatDate(item.completed_at)}
                       </td>
                     </tr>
@@ -257,6 +257,8 @@ export default function AdminDashboard() {
     </div>
   )
 }
+
+
 
 
 

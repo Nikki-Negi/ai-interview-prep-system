@@ -24,7 +24,7 @@ const emptyStats = {
   category_breakdown: [],
   score_trend: [],
 }
-const chartColors = ['#60a5fa', '#34d399', '#fbbf24', '#f87171', '#a78bfa']
+const chartColors = ['#2563eb', '#059669', '#d97706', '#dc2626', '#7c3aed']
 
 function getAuthHeaders() {
   const token =
@@ -60,20 +60,20 @@ function getFeedback(score) {
   const normalizedScore = normalizeScore(score)
 
   if (normalizedScore >= 75) {
-    return { label: 'Good', className: 'text-emerald-300' }
+    return { label: 'Good', className: 'text-emerald-700' }
   }
 
   if (normalizedScore >= 50) {
-    return { label: 'Average', className: 'text-amber-300' }
+    return { label: 'Average', className: 'text-amber-700' }
   }
 
-  return { label: 'Needs Improvement', className: 'text-red-300' }
+  return { label: 'Needs Improvement', className: 'text-red-700' }
 }
 
 function EmptyChart() {
   return (
-    <div className="flex min-h-[260px] items-center justify-center rounded-md border border-gray-800 bg-gray-950 p-6 text-center">
-      <p className="max-w-xs text-sm text-slate-300">
+    <div className="flex min-h-[260px] items-center justify-center rounded-md border border-gray-200 bg-gray-50 p-6 text-center">
+      <p className="max-w-xs text-sm text-gray-500">
         Complete your first interview to see stats here.
       </p>
     </div>
@@ -148,16 +148,16 @@ export default function Dashboard() {
 
   if (!userEmail) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-950 px-4 text-slate-100">
-        <div className="w-full max-w-xl rounded-md border border-gray-800 bg-gray-900 p-6 text-center">
-          <h1 className="text-3xl font-bold text-white">No session found</h1>
-          <p className="mt-3 text-slate-300">
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 text-gray-900">
+        <div className="w-full max-w-xl rounded-md border border-gray-200 bg-white p-6 text-center">
+          <h1 className="text-3xl font-bold text-gray-900">No session found</h1>
+          <p className="mt-3 text-gray-500">
             Please log in to view your dashboard.
           </p>
           <button
             type="button"
             onClick={() => navigate('/login')}
-            className="mt-6 rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
+            className="mt-6 rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
           >
             Go to Login
           </button>
@@ -167,29 +167,29 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="bg-gray-950 px-4 py-12 text-slate-100">
+    <div className="bg-gray-50 px-4 py-12 text-gray-900">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
-        <section className="rounded-md border border-gray-800 bg-gray-900 p-6">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">
+        <section className="rounded-md border border-gray-200 bg-white p-6">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
             Dashboard
           </p>
-          <h1 className="mt-3 text-4xl font-bold tracking-tight text-white">
+          <h1 className="mt-3 text-4xl font-bold tracking-tight text-gray-900">
             Welcome, {user?.name || 'Guest'}!
           </h1>
-          <p className="mt-3 max-w-2xl text-base leading-7 text-slate-300">
+          <p className="mt-3 max-w-2xl text-base leading-7 text-gray-500">
             Keep building momentum with focused interview practice and clear
             performance feedback.
           </p>
         </section>
 
         {error ? (
-          <div className="rounded-md border border-red-900/50 bg-red-950/40 p-6">
-            <p className="text-sm font-semibold text-red-300">Something went wrong</p>
-            <p className="mt-2 text-sm text-red-200">{error}</p>
+          <div className="rounded-md border border-red-200 bg-red-50 p-6">
+            <p className="text-sm font-semibold text-red-700">Something went wrong</p>
+            <p className="mt-2 text-sm text-red-700">{error}</p>
             <button
               type="button"
               onClick={loadDashboard}
-              className="mt-4 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
+              className="mt-4 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
             >
               Retry
             </button>
@@ -216,22 +216,22 @@ export default function Dashboard() {
           ].map(({ label, value, icon: Icon }) => (
             <div
               key={label}
-              className="rounded-md border border-gray-800 bg-gray-900 p-6"
+              className="rounded-md border border-gray-200 bg-white p-6"
             >
               <div className="flex items-center justify-between gap-4">
-                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">
+                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
                   {label}
                 </p>
-                <Icon className="h-5 w-5 text-blue-400" aria-hidden="true" />
+                <Icon className="h-5 w-5 text-blue-600" aria-hidden="true" />
               </div>
-              <p className="mt-5 text-3xl font-bold text-white">{value}</p>
+              <p className="mt-5 text-3xl font-bold text-gray-900">{value}</p>
             </div>
           ))}
         </section>
 
         <section className="grid gap-4 lg:grid-cols-2">
-          <div className="rounded-md border border-gray-800 bg-gray-900 p-6">
-            <h2 className="text-xl font-bold text-white">Performance Overview</h2>
+          <div className="rounded-md border border-gray-200 bg-white p-6">
+            <h2 className="text-xl font-bold text-gray-900">Performance Overview</h2>
             <div className="mt-6">
               {loading ? (
                 <EmptyChart />
@@ -241,22 +241,22 @@ export default function Dashboard() {
                     <LineChart data={scoreTrend} margin={{ left: -20, right: 12 }}>
                       <XAxis
                         dataKey="date"
-                        tick={{ fill: '#94a3b8', fontSize: 12 }}
-                        axisLine={{ stroke: '#374151' }}
-                        tickLine={{ stroke: '#374151' }}
+                        tick={{ fill: '#374151', fontSize: 12 }}
+                        axisLine={{ stroke: '#e5e7eb' }}
+                        tickLine={{ stroke: '#e5e7eb' }}
                       />
                       <YAxis
                         domain={[0, 100]}
-                        tick={{ fill: '#94a3b8', fontSize: 12 }}
-                        axisLine={{ stroke: '#374151' }}
-                        tickLine={{ stroke: '#374151' }}
+                        tick={{ fill: '#374151', fontSize: 12 }}
+                        axisLine={{ stroke: '#e5e7eb' }}
+                        tickLine={{ stroke: '#e5e7eb' }}
                       />
                       <Tooltip
                         contentStyle={{
-                          background: '#111827',
-                          border: '1px solid #1f2937',
+                          background: '#ffffff',
+                          border: '1px solid #e5e7eb',
                           borderRadius: '6px',
-                          color: '#e5e7eb',
+                          color: '#111827',
                         }}
                       />
                       <Line
@@ -276,8 +276,8 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="rounded-md border border-gray-800 bg-gray-900 p-6">
-            <h2 className="text-xl font-bold text-white">Category Breakdown</h2>
+          <div className="rounded-md border border-gray-200 bg-white p-6">
+            <h2 className="text-xl font-bold text-gray-900">Category Breakdown</h2>
             <div className="mt-6">
               {loading ? (
                 <EmptyChart />
@@ -293,15 +293,15 @@ export default function Dashboard() {
                           innerRadius={62}
                           outerRadius={92}
                           paddingAngle={3}
-                          stroke="#111827"
+                        stroke="#ffffff"
                         />
                         <Tooltip
                           formatter={(value) => `${Math.round(value)}%`}
                           contentStyle={{
-                            background: '#111827',
-                            border: '1px solid #1f2937',
+                            background: '#ffffff',
+                            border: '1px solid #e5e7eb',
                             borderRadius: '6px',
-                            color: '#e5e7eb',
+                            color: '#111827',
                           }}
                         />
                       </PieChart>
@@ -311,7 +311,7 @@ export default function Dashboard() {
                     {categoryBreakdown.map((item) => (
                       <div
                         key={item.name}
-                        className="flex items-center justify-between gap-3 rounded-md border border-gray-800 bg-gray-950 px-3 py-2"
+                        className="flex items-center justify-between gap-3 rounded-md border border-gray-200 bg-gray-50 px-3 py-2"
                       >
                         <div className="flex min-w-0 items-center gap-2">
                           <span
@@ -319,11 +319,11 @@ export default function Dashboard() {
                             style={{ backgroundColor: item.fill }}
                             aria-hidden="true"
                           />
-                          <span className="truncate text-sm text-slate-200">
+                          <span className="truncate text-sm text-gray-700">
                             {item.name}
                           </span>
                         </div>
-                        <span className="text-sm font-semibold text-white">
+                        <span className="text-sm font-semibold text-gray-900">
                           {Math.round(item.value)}%
                         </span>
                       </div>
@@ -337,12 +337,12 @@ export default function Dashboard() {
           </div>
         </section>
 
-        <section className="rounded-md border border-gray-800 bg-gray-900 p-6">
+        <section className="rounded-md border border-gray-200 bg-white p-6">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <h2 className="text-xl font-bold text-white">Recent Interviews</h2>
+            <h2 className="text-xl font-bold text-gray-900">Recent Interviews</h2>
             <Link
               to="/history"
-              className="text-sm font-semibold text-blue-300 transition hover:text-blue-200"
+              className="text-sm font-semibold text-blue-700 transition hover:text-blue-800"
             >
               View all
             </Link>
@@ -351,7 +351,7 @@ export default function Dashboard() {
           <div className="mt-6 overflow-x-auto">
             <table className="w-full min-w-[720px] border-collapse text-left">
               <thead>
-                <tr className="border-b border-gray-800 text-xs font-semibold uppercase tracking-[0.2em] text-gray-400">
+                <tr className="border-b border-gray-200 text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
                   <th className="py-3 pr-4">Date</th>
                   <th className="py-3 pr-4">Category</th>
                   <th className="py-3 pr-4">Score</th>
@@ -362,7 +362,7 @@ export default function Dashboard() {
               <tbody>
                 {loading ? (
                   <tr>
-                    <td className="py-6 text-sm text-slate-300" colSpan={5}>
+                    <td className="py-6 text-sm text-gray-500" colSpan={5}>
                       Loading recent interviews...
                     </td>
                   </tr>
@@ -373,15 +373,15 @@ export default function Dashboard() {
                     return (
                       <tr
                         key={item.id}
-                        className="border-b border-gray-800 last:border-b-0"
+                        className="border-b border-gray-200 last:border-b-0"
                       >
-                        <td className="py-4 pr-4 text-sm text-slate-300">
+                        <td className="py-4 pr-4 text-sm text-gray-500">
                           {formatDate(item.completed_at)}
                         </td>
-                        <td className="py-4 pr-4 text-sm font-medium text-white">
+                        <td className="py-4 pr-4 text-sm font-medium text-gray-900">
                           {item.category || 'Uncategorized'}
                         </td>
-                        <td className="py-4 pr-4 text-sm text-slate-200">
+                        <td className="py-4 pr-4 text-sm text-gray-700">
                           {formatScore(item.average_score)}
                         </td>
                         <td className={`py-4 pr-4 text-sm font-semibold ${feedback.className}`}>
@@ -390,7 +390,7 @@ export default function Dashboard() {
                         <td className="py-4 text-right">
                           <Link
                             to={`/history?record=${encodeURIComponent(item.id)}`}
-                            className="text-sm font-semibold text-blue-300 transition hover:text-blue-200"
+                            className="text-sm font-semibold text-blue-700 transition hover:text-blue-800"
                           >
                             View
                           </Link>
@@ -400,7 +400,7 @@ export default function Dashboard() {
                   })
                 ) : (
                   <tr>
-                    <td className="py-6 text-sm text-slate-300" colSpan={5}>
+                    <td className="py-6 text-sm text-gray-500" colSpan={5}>
                       Complete your first interview to see stats here.
                     </td>
                   </tr>
@@ -413,3 +413,5 @@ export default function Dashboard() {
     </div>
   )
 }
+
+

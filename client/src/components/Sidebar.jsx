@@ -59,18 +59,18 @@ export default function Sidebar() {
   const linkClass = ({ isActive }) =>
     `flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition ${
       isActive
-        ? 'border-l-2 border-blue-500 bg-gray-900 text-white shadow-sm'
-        : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+        ? 'border-l-2 border-blue-500 bg-blue-50 text-blue-700 shadow-sm'
+        : 'text-gray-500 hover:bg-gray-100 hover:text-gray-900'
     }`
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-30 flex w-64 flex-col border-r border-gray-800 bg-gray-950 text-slate-100">
-      <div className="border-b border-gray-800 px-5 py-5">
+    <aside className="fixed inset-y-0 left-0 z-30 flex w-64 flex-col border-r border-gray-200 bg-white text-gray-900">
+      <div className="border-b border-gray-200 px-5 py-5">
         <Link to="/dashboard" className="flex items-center gap-3">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-gray-800 bg-gray-900 text-lg font-black text-slate-100">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-gray-200 bg-white text-lg font-black text-gray-900">
             AI
           </span>
-          <span className="text-base font-semibold tracking-tight text-white">
+          <span className="text-base font-semibold tracking-tight text-gray-900">
             AI Interview Prep
           </span>
         </Link>
@@ -81,7 +81,7 @@ export default function Sidebar() {
           <NavLink key={to} to={to} className={linkClass}>
             <Icon
               className={`h-5 w-5 ${
-                isActivePath(to) ? 'text-blue-400' : 'text-slate-400'
+                isActivePath(to) ? 'text-blue-700' : 'text-gray-500'
               }`}
               aria-hidden="true"
             />
@@ -93,7 +93,7 @@ export default function Sidebar() {
           <NavLink to="/admin" className={linkClass}>
             <Shield
               className={`h-5 w-5 ${
-                isActivePath('/admin') ? 'text-blue-400' : 'text-slate-400'
+                isActivePath('/admin') ? 'text-blue-700' : 'text-gray-500'
               }`}
               aria-hidden="true"
             />
@@ -102,24 +102,26 @@ export default function Sidebar() {
         ) : null}
       </nav>
 
-      <div className="border-t border-gray-800 p-4">
-        <div className="mb-3 rounded-md border border-gray-800 bg-gray-900 px-3 py-3">
-          <p className="truncate text-sm font-medium text-slate-100">
+      <div className="border-t border-gray-200 p-4">
+        <div className="mb-3 rounded-md border border-gray-200 bg-white px-3 py-3">
+          <p className="truncate text-sm font-medium text-gray-900">
             {user?.name || 'Guest'}
           </p>
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-xs text-gray-500">
             {isAdmin ? 'Administrator' : 'Interview prep'}
           </p>
         </div>
         <button
           type="button"
           onClick={handleLogout}
-          className="flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white"
+          className="flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-gray-500 transition hover:bg-gray-100 hover:text-gray-900"
         >
-          <LogOut className="h-5 w-5 text-slate-400" aria-hidden="true" />
+          <LogOut className="h-5 w-5 text-gray-500" aria-hidden="true" />
           <span>Logout</span>
         </button>
       </div>
     </aside>
   )
 }
+
+

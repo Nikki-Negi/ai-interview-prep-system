@@ -35,18 +35,18 @@ export default function Navbar() {
   const linkClass = ({ isActive }) =>
     `rounded-md px-4 py-2 text-sm font-medium transition ${
       isActive
-        ? 'border-l-2 border-blue-500 bg-gray-900 text-white'
-        : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+        ? 'border-l-2 border-blue-500 bg-blue-50 text-blue-700'
+        : 'text-gray-500 hover:bg-gray-100 hover:text-gray-900'
     }`
 
   return (
-    <header className="border-b border-gray-800 bg-gray-950/95 backdrop-blur">
+    <header className="border-b border-gray-200 bg-white/95 backdrop-blur">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
         <Link to="/dashboard" className="flex items-center gap-3">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-gray-800 bg-gray-900 text-lg font-black text-slate-100">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-gray-200 bg-white text-lg font-black text-gray-900">
             AI
           </span>
-          <span className="text-lg font-semibold tracking-tight text-white">
+          <span className="text-lg font-semibold tracking-tight text-gray-900">
             AI Interview Prep
           </span>
         </Link>
@@ -70,17 +70,17 @@ export default function Navbar() {
 
         <div className="flex items-center gap-3">
           <div className="hidden text-right sm:block">
-            <p className="text-sm font-medium text-slate-100">
+            <p className="text-sm font-medium text-gray-900">
               {user?.name || 'Guest'}
             </p>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-gray-500">
               {isAdmin ? 'Administrator' : 'Interview prep'}
             </p>
           </div>
           <button
             type="button"
             onClick={handleLogout}
-            className="rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
+            className="rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
           >
             Logout
           </button>
@@ -89,6 +89,8 @@ export default function Navbar() {
     </header>
   )
 }
+
+
 
 
 

@@ -86,16 +86,16 @@ export default function LatestFeedback() {
 
   if (!userEmail) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-950 px-4 text-slate-100">
-        <div className="w-full max-w-xl rounded-md border border-gray-800 bg-gray-900 p-6 text-center">
-          <h1 className="text-3xl font-bold text-white">No session found</h1>
-          <p className="mt-3 text-slate-300">
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 text-gray-900">
+        <div className="w-full max-w-xl rounded-md border border-gray-200 bg-white p-6 text-center">
+          <h1 className="text-3xl font-bold text-gray-900">No session found</h1>
+          <p className="mt-3 text-gray-500">
             Please log in to view your feedback.
           </p>
           <button
             type="button"
             onClick={() => navigate('/login')}
-            className="mt-6 rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
+            className="mt-6 rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
           >
             Go to Login
           </button>
@@ -106,10 +106,10 @@ export default function LatestFeedback() {
 
   if (loading) {
     return (
-      <div className="bg-gray-950 px-4 py-12 text-slate-100">
-        <div className="mx-auto w-full max-w-5xl rounded-md border border-gray-800 bg-gray-900 p-6 text-center">
-          <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-md border-4 border-gray-800 border-t-gray-500" />
-          <p className="text-sm font-medium text-slate-300">Loading latest feedback...</p>
+      <div className="bg-gray-50 px-4 py-12 text-gray-900">
+        <div className="mx-auto w-full max-w-5xl rounded-md border border-gray-200 bg-white p-6 text-center">
+          <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-md border-4 border-gray-200 border-t-gray-400" />
+          <p className="text-sm font-medium text-gray-500">Loading latest feedback...</p>
         </div>
       </div>
     )
@@ -117,17 +117,17 @@ export default function LatestFeedback() {
 
   if (!hasInterviews) {
     return (
-      <div className="bg-gray-950 px-4 py-12 text-slate-100">
-        <div className="mx-auto w-full max-w-5xl rounded-md border border-gray-800 bg-gray-900 p-8 text-center">
-          <h1 className="text-3xl font-bold text-white">
+      <div className="bg-gray-50 px-4 py-12 text-gray-900">
+        <div className="mx-auto w-full max-w-5xl rounded-md border border-gray-200 bg-white p-8 text-center">
+          <h1 className="text-3xl font-bold text-gray-900">
             Complete your first interview to see feedback here
           </h1>
-          <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-300">
+          <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-gray-500">
             Your latest evaluation, strengths, and improvement suggestions will appear here.
           </p>
           <Link
             to="/categories"
-            className="mt-6 inline-flex items-center justify-center rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
+            className="mt-6 inline-flex items-center justify-center rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
           >
             Start an Interview
           </Link>
@@ -138,14 +138,14 @@ export default function LatestFeedback() {
 
   if (error) {
     return (
-      <div className="bg-gray-950 px-4 py-12 text-slate-100">
-        <div className="mx-auto w-full max-w-5xl rounded-md border border-red-900/50 bg-red-950/40 p-6">
-          <p className="text-sm font-semibold text-red-300">Something went wrong</p>
-          <p className="mt-2 text-sm text-red-200">{error}</p>
+      <div className="bg-gray-50 px-4 py-12 text-gray-900">
+        <div className="mx-auto w-full max-w-5xl rounded-md border border-red-200 bg-red-50 p-6">
+          <p className="text-sm font-semibold text-red-700">Something went wrong</p>
+          <p className="mt-2 text-sm text-red-700">{error}</p>
           <button
             type="button"
             onClick={loadLatestFeedback}
-            className="mt-4 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
+            className="mt-4 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
           >
             Retry
           </button>
@@ -159,8 +159,8 @@ export default function LatestFeedback() {
       feedbackItems={feedbackItems}
       overallSummary={latestRecord?.overall_summary || ''}
       header={
-        <div className="rounded-md border border-gray-800 bg-gray-900 p-6">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">
+        <div className="rounded-md border border-gray-200 bg-white p-6">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
             Latest feedback
           </p>
           <div className="mt-4 grid gap-4 md:grid-cols-[1.4fr_1fr_0.8fr]">
@@ -168,7 +168,7 @@ export default function LatestFeedback() {
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
                 Interview Type
               </p>
-              <h1 className="mt-2 break-words text-3xl font-bold text-white">
+              <h1 className="mt-2 break-words text-3xl font-bold text-gray-900">
                 {latestRecord?.category || 'Interview'}
               </h1>
             </div>
@@ -176,7 +176,7 @@ export default function LatestFeedback() {
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
                 Date
               </p>
-              <p className="mt-2 text-base font-semibold text-slate-200">
+              <p className="mt-2 text-base font-semibold text-gray-700">
                 {formatDate(latestRecord?.completed_at)}
               </p>
             </div>
@@ -184,7 +184,7 @@ export default function LatestFeedback() {
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
                 Overall Score
               </p>
-              <p className="mt-2 text-3xl font-bold text-blue-300">
+              <p className="mt-2 text-3xl font-bold text-blue-700">
                 {overallScore.toFixed(1)}/10
               </p>
             </div>
@@ -195,7 +195,7 @@ export default function LatestFeedback() {
         <div className="flex justify-center">
           <Link
             to="/history"
-            className="rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
+            className="rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
           >
             View Interview History
           </Link>
@@ -204,3 +204,5 @@ export default function LatestFeedback() {
     />
   )
 }
+
+

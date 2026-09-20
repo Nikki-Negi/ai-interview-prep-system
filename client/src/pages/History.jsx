@@ -19,14 +19,14 @@ function formatDate(value) {
 
 function scoreClasses(score) {
   if (score >= 8) {
-    return 'border-l-2 border-emerald-400 text-emerald-300'
+    return 'border-l-2 border-emerald-400 text-emerald-700'
   }
 
   if (score >= 4) {
-    return 'border-l-2 border-amber-400 text-amber-300'
+    return 'border-l-2 border-amber-400 text-amber-700'
   }
 
-  return 'border-l-2 border-red-400 text-red-300'
+  return 'border-l-2 border-red-400 text-red-700'
 }
 
 export default function History() {
@@ -114,14 +114,14 @@ export default function History() {
 
   if (!userEmail) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-950 px-4 text-slate-100">
-        <div className="w-full max-w-xl rounded-md border border-gray-800 bg-gray-900 p-6 text-center">
-          <h1 className="text-3xl font-bold text-white">No session found</h1>
-          <p className="mt-3 text-slate-300">Please log in to view your history.</p>
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 text-gray-900">
+        <div className="w-full max-w-xl rounded-md border border-gray-200 bg-white p-6 text-center">
+          <h1 className="text-3xl font-bold text-gray-900">No session found</h1>
+          <p className="mt-3 text-gray-500">Please log in to view your history.</p>
           <button
             type="button"
             onClick={() => navigate('/login')}
-            className="mt-6 rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
+            className="mt-6 rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
           >
             Go to Login
           </button>
@@ -132,25 +132,25 @@ export default function History() {
 
   if (recordId && selectedRecord) {
     return (
-      <div className="bg-gray-950 px-4 py-12 text-slate-100">
+      <div className="bg-gray-50 px-4 py-12 text-gray-900">
         <div className="mx-auto flex w-full max-w-5xl flex-col gap-6">
-          <div className="rounded-md border border-gray-800 bg-gray-900 p-6">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">
+          <div className="rounded-md border border-gray-200 bg-white p-6">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
               Interview detail
             </p>
-            <h1 className="mt-3 text-4xl font-bold text-white">
+            <h1 className="mt-3 text-4xl font-bold text-gray-900">
               {selectedRecord.category}
             </h1>
-            <p className="mt-3 text-slate-300">
+            <p className="mt-3 text-gray-500">
               Completed {formatDate(selectedRecord.completed_at)}
             </p>
           </div>
 
-          <div className="w-full rounded-md border border-gray-800 border-l-2 border-blue-500 bg-gray-900 p-6">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">
+          <div className="w-full rounded-md border border-gray-200 border-l-2 border-blue-500 bg-white p-6">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
               Overall summary
             </p>
-            <p className="mt-3 break-words text-slate-200">
+            <p className="mt-3 break-words text-gray-700">
               {selectedRecord.overall_summary}
             </p>
           </div>
@@ -159,14 +159,14 @@ export default function History() {
             {detailQuestionResults.map((item, index) => (
               <div
                 key={`${index}-${item.question}`}
-                className="w-full rounded-md border border-gray-800 bg-gray-900 p-6"
+                className="w-full rounded-md border border-gray-200 bg-white p-6"
               >
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">
+                    <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
                       Question
                     </p>
-                    <p className="mt-2 break-words text-lg font-semibold text-white">
+                    <p className="mt-2 break-words text-lg font-semibold text-gray-900">
                       {item.question}
                     </p>
                   </div>
@@ -180,24 +180,24 @@ export default function History() {
                 </div>
 
                 <div className="mt-5 grid gap-4 md:grid-cols-2">
-                  <div className="min-w-0 rounded-md border border-gray-800 bg-gray-950 p-4">
-                    <p className="text-sm font-semibold text-slate-200">Answer</p>
-                    <p className="mt-2 break-words whitespace-pre-wrap text-sm leading-6 text-slate-300">
+                  <div className="min-w-0 rounded-md border border-gray-200 bg-gray-50 p-4">
+                    <p className="text-sm font-semibold text-gray-700">Answer</p>
+                    <p className="mt-2 break-words whitespace-pre-wrap text-sm leading-6 text-gray-500">
                       {item.answer}
                     </p>
                   </div>
                   <div className="space-y-4">
-                    <div className="rounded-md border border-gray-800 bg-gray-950 p-4 border-l-2 border-emerald-400">
-                      <p className="text-sm font-semibold text-gray-300">Strengths</p>
-                      <p className="mt-2 break-words text-sm leading-6 text-emerald-100">
+                    <div className="rounded-md border border-gray-200 bg-gray-50 p-4 border-l-2 border-emerald-400">
+                      <p className="text-sm font-semibold text-gray-700">Strengths</p>
+                      <p className="mt-2 break-words text-sm leading-6 text-emerald-800">
                         {item.strengths}
                       </p>
                     </div>
-                    <div className="rounded-md border border-gray-800 bg-gray-950 p-4 border-l-2 border-amber-400">
-                      <p className="text-sm font-semibold text-gray-300">
+                    <div className="rounded-md border border-gray-200 bg-gray-50 p-4 border-l-2 border-amber-400">
+                      <p className="text-sm font-semibold text-gray-700">
                         Improvement suggestion
                       </p>
-                      <p className="mt-2 break-words text-sm leading-6 text-amber-100">
+                      <p className="mt-2 break-words text-sm leading-6 text-amber-800">
                         {item.improvement}
                       </p>
                     </div>
@@ -211,7 +211,7 @@ export default function History() {
             <button
               type="button"
               onClick={handleBackToList}
-              className="rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
+              className="rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
             >
               Back to History
             </button>
@@ -222,32 +222,32 @@ export default function History() {
   }
 
   return (
-    <div className="bg-gray-950 px-4 py-12 text-slate-100">
+    <div className="bg-gray-50 px-4 py-12 text-gray-900">
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-6">
-        <div className="rounded-md border border-gray-800 bg-gray-900 p-6">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">
+        <div className="rounded-md border border-gray-200 bg-white p-6">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
             Performance history
           </p>
-          <h1 className="mt-3 text-4xl font-bold text-white">
+          <h1 className="mt-3 text-4xl font-bold text-gray-900">
             Your past interviews
           </h1>
         </div>
 
         {loading ? (
-          <div className="rounded-md border border-gray-800 bg-gray-900 p-6 text-center">
-            <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-md border-4 border-gray-800 border-t-gray-500" />
-            <p className="text-sm font-medium text-slate-300">Loading history...</p>
+          <div className="rounded-md border border-gray-200 bg-white p-6 text-center">
+            <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-md border-4 border-gray-200 border-t-gray-400" />
+            <p className="text-sm font-medium text-gray-500">Loading history...</p>
           </div>
         ) : null}
 
         {error ? (
-          <div className="rounded-md border border-red-900/50 bg-red-950/40 p-6">
-            <p className="text-sm font-semibold text-red-300">Something went wrong</p>
-            <p className="mt-2 text-sm text-red-200">{error}</p>
+          <div className="rounded-md border border-red-200 bg-red-50 p-6">
+            <p className="text-sm font-semibold text-red-700">Something went wrong</p>
+            <p className="mt-2 text-sm text-red-700">{error}</p>
             <button
               type="button"
               onClick={loadHistory}
-              className="mt-4 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
+              className="mt-4 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
             >
               Retry
             </button>
@@ -255,9 +255,9 @@ export default function History() {
         ) : null}
 
         {!loading && !error && historyItems.length === 0 ? (
-          <div className="rounded-md border border-gray-800 bg-gray-900 p-6 text-center">
-            <p className="text-lg font-semibold text-white">No interviews yet</p>
-            <p className="mt-2 text-sm text-slate-300">
+          <div className="rounded-md border border-gray-200 bg-white p-6 text-center">
+            <p className="text-lg font-semibold text-gray-900">No interviews yet</p>
+            <p className="mt-2 text-sm text-gray-500">
               Complete your first interview to see it here.
             </p>
           </div>
@@ -269,17 +269,17 @@ export default function History() {
               key={item.id}
               type="button"
               onClick={() => handleOpenDetail(item.id)}
-              className="w-full rounded-md border border-gray-800 bg-gray-900 p-6 text-left transition hover:border-blue-500/30"
+              className="w-full rounded-md border border-gray-200 bg-white p-6 text-left transition hover:border-blue-500/30"
             >
               <div className="flex w-full min-w-0 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div className="min-w-0">
-                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">
+                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
                     {item.category}
                   </p>
-                  <p className="mt-2 break-words text-base font-semibold text-white">
+                  <p className="mt-2 break-words text-base font-semibold text-gray-900">
                     {item.overall_summary}
                   </p>
-                  <p className="mt-2 text-sm text-slate-300">
+                  <p className="mt-2 text-sm text-gray-500">
                     {formatDate(item.completed_at)}
                   </p>
                 </div>
@@ -296,20 +296,20 @@ export default function History() {
         </div>
 
         {recordId && detailLoading ? (
-          <div className="rounded-md border border-gray-800 bg-gray-900 p-6 text-center">
-            <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-md border-4 border-gray-800 border-t-gray-500" />
-            <p className="text-sm font-medium text-slate-300">Loading interview detail...</p>
+          <div className="rounded-md border border-gray-200 bg-white p-6 text-center">
+            <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-md border-4 border-gray-200 border-t-gray-400" />
+            <p className="text-sm font-medium text-gray-500">Loading interview detail...</p>
           </div>
         ) : null}
 
         {recordId && detailError ? (
-          <div className="rounded-md border border-red-900/50 bg-red-950/40 p-6">
-            <p className="text-sm font-semibold text-red-300">Something went wrong</p>
-            <p className="mt-2 text-sm text-red-200">{detailError}</p>
+          <div className="rounded-md border border-red-200 bg-red-50 p-6">
+            <p className="text-sm font-semibold text-red-700">Something went wrong</p>
+            <p className="mt-2 text-sm text-red-700">{detailError}</p>
             <button
               type="button"
               onClick={() => loadDetail(recordId)}
-              className="mt-4 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
+              className="mt-4 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
             >
               Retry
             </button>
@@ -319,6 +319,8 @@ export default function History() {
     </div>
   )
 }
+
+
 
 
 

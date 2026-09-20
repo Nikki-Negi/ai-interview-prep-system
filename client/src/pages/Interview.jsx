@@ -239,7 +239,7 @@ export default function Interview() {
         value={answerValue}
         onChange={(event) => handleAnswerChange(answerKey, event.target.value)}
         rows={5}
-        className="min-h-[140px] flex-1 rounded-md border border-gray-800 bg-gray-950 px-4 py-3 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
+        className="min-h-[140px] flex-1 rounded-md border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
         placeholder="Type your answer here, or use the microphone button..."
       />
 
@@ -251,20 +251,20 @@ export default function Interview() {
           className={`inline-flex h-12 w-12 items-center justify-center rounded-md border text-lg font-semibold transition ${
             voiceSupported
               ? isListening
-                ? 'animate-pulse border-red-500/40 bg-red-500 text-white hover:bg-red-600'
-                : 'border-gray-800 bg-gray-950 text-slate-300 hover:border-blue-500 hover:text-blue-300'
-              : 'cursor-not-allowed border-gray-800 bg-gray-950 text-slate-600'
+                ? 'animate-pulse border-red-500/40 bg-red-600 text-white hover:bg-red-700'
+                : 'border-gray-200 bg-gray-50 text-gray-500 hover:border-blue-500 hover:text-blue-700'
+              : 'cursor-not-allowed border-gray-200 bg-gray-50 text-gray-400'
           }`}
           aria-label={isListening ? 'Stop voice input' : 'Start voice input'}
         >
           <MicIcon active={isListening} />
         </button>
         {!voiceSupported ? (
-          <p className="max-w-[10rem] text-xs leading-5 text-slate-400">
+          <p className="max-w-[10rem] text-xs leading-5 text-gray-500">
             Voice input not supported in this browser.
           </p>
         ) : (
-          <p className="max-w-[10rem] text-xs leading-5 text-slate-400">
+          <p className="max-w-[10rem] text-xs leading-5 text-gray-500">
             {isListening ? 'Listening...' : 'Use voice input'}
           </p>
         )}
@@ -279,8 +279,8 @@ export default function Interview() {
           key={optionKey}
           className={`flex cursor-pointer items-center gap-3 rounded-md border px-4 py-3 transition ${
             answerValue === optionKey
-              ? 'border-blue-500 bg-blue-500/15 text-blue-300'
-              : 'border-gray-800 bg-gray-950 text-slate-300 hover:border-blue-500/40 hover:text-white'
+              ? 'border-blue-500 bg-blue-500/15 text-blue-700'
+              : 'border-gray-200 bg-gray-50 text-gray-500 hover:border-blue-500/40 hover:text-gray-900'
           }`}
         >
           <input
@@ -291,7 +291,7 @@ export default function Interview() {
             onChange={() => handleAnswerChange(answerKey, optionKey)}
             className="h-4 w-4 accent-blue-500"
           />
-          <span className="min-w-8 font-semibold text-white">{optionKey}.</span>
+          <span className="min-w-8 font-semibold text-gray-900">{optionKey}.</span>
           <span className="break-words">{question.options?.[optionKey] || ''}</span>
         </label>
       ))}
@@ -307,14 +307,14 @@ export default function Interview() {
     return (
       <li
         key={answerKey}
-        className="rounded-md border border-gray-800 bg-gray-900 p-6 text-slate-100   transition hover:border-blue-500/30"
+        className="rounded-md border border-gray-200 bg-white p-6 text-gray-900   transition hover:border-blue-500/30"
       >
         <div className="mb-4 flex items-start gap-3">
-          <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-blue-500 bg-gray-900 text-sm font-semibold text-white">
+          <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-blue-500 bg-white text-sm font-semibold text-gray-900">
             {index + 1}
           </span>
           <div className="min-w-0 flex-1">
-            <p className="text-base font-semibold leading-7 text-white break-words">
+            <p className="text-base font-semibold leading-7 text-gray-900 break-words">
               {question.question}
             </p>
           </div>
@@ -326,18 +326,18 @@ export default function Interview() {
   }
 
   return (
-    <div className="bg-gray-950 px-4 py-12 text-slate-100">
+    <div className="bg-gray-50 px-4 py-12 text-gray-900">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
-        <div className="rounded-md border border-gray-800 bg-gray-900 p-6">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">
+        <div className="rounded-md border border-gray-200 bg-white p-6">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
             Interview mode
           </p>
-          <h1 className="mt-3 text-4xl font-bold text-white">
+          <h1 className="mt-3 text-4xl font-bold text-gray-900">
             {selectedCategory?.name
               ? `You selected: ${selectedCategory.name}.`
               : 'No category selected.'}
           </h1>
-          <p className="mt-4 max-w-3xl text-slate-300">
+          <p className="mt-4 max-w-3xl text-gray-500">
             {selectedCategory?.name
               ? 'Answer each question below, then submit all responses.'
               : 'Go back and choose a category to continue.'}
@@ -345,22 +345,22 @@ export default function Interview() {
         </div>
 
         {loadingQuestions ? (
-          <div className="rounded-md border border-gray-800 bg-gray-900 p-6 text-center">
-            <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-md border-4 border-gray-800 border-t-gray-500" />
-            <p className="text-sm font-medium text-slate-300">
+          <div className="rounded-md border border-gray-200 bg-white p-6 text-center">
+            <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-md border-4 border-gray-200 border-t-gray-400" />
+            <p className="text-sm font-medium text-gray-500">
               Generating your interview questions...
             </p>
           </div>
         ) : null}
 
         {questionsError ? (
-          <div className="rounded-md border border-red-900/50 bg-red-950/40 p-6">
-            <p className="text-sm font-semibold text-red-300">Something went wrong</p>
-            <p className="mt-2 text-sm text-red-200">{questionsError}</p>
+          <div className="rounded-md border border-red-200 bg-red-50 p-6">
+            <p className="text-sm font-semibold text-red-700">Something went wrong</p>
+            <p className="mt-2 text-sm text-red-700">{questionsError}</p>
             <button
               type="button"
               onClick={fetchQuestions}
-              className="mt-4 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
+              className="mt-4 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
             >
               Retry
             </button>
@@ -368,13 +368,13 @@ export default function Interview() {
         ) : null}
 
         {!loadingQuestions && !questionsError && questions.length > 0 ? (
-          <div className="rounded-md border border-gray-800 bg-gray-900 p-6">
+          <div className="rounded-md border border-gray-200 bg-white p-6">
             <div className="mb-6 flex items-center justify-between gap-4">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">
+                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
                   Questions
                 </p>
-                <h2 className="mt-2 text-2xl font-bold text-white">
+                <h2 className="mt-2 text-2xl font-bold text-gray-900">
                   Practice these questions
                 </h2>
               </div>
@@ -383,12 +383,12 @@ export default function Interview() {
             <ol className="space-y-4">{questions.map(renderQuestionCard)}</ol>
 
             {submitError ? (
-              <div className="mt-6 rounded-md border border-red-900/50 bg-red-950/40 p-4 text-sm text-red-200">
+              <div className="mt-6 rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-700">
                 <p>{submitError}</p>
                 <button
                   type="button"
                   onClick={handleSubmitAll}
-                  className="mt-3 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
+                  className="mt-3 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
                 >
                   Retry
                 </button>
@@ -399,13 +399,13 @@ export default function Interview() {
               type="button"
               onClick={handleSubmitAll}
               disabled={!allAnswered || loadingSubmission}
-              className="mt-8 rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:bg-slate-700"
+              className="mt-8 rounded-md bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-300"
             >
               {loadingSubmission ? 'Submitting answers...' : 'Submit All Answers'}
             </button>
 
             {!allAnswered ? (
-              <p className="mt-3 text-sm text-slate-400">
+              <p className="mt-3 text-sm text-gray-500">
                 Fill in all questions to enable submission.
               </p>
             ) : null}
@@ -415,4 +415,6 @@ export default function Interview() {
     </div>
   )
 }
+
+
 
