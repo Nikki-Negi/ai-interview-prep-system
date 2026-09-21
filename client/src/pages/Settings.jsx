@@ -20,12 +20,28 @@ const interviewTypes = [
   { label: 'MCQ', value: 'mcq' },
   { label: 'Mixed', value: 'mixed' },
 ]
+const PASSWORD_STRENGTH_ERROR =
+  'Password must be at least 8 characters, not consist mainly of spaces, include at least one number, include at least one special character, and include at least one uppercase letter.'
+const PASSWORD_SPECIAL_CHARACTER_PATTERN = /[!@#$%^&*()_+\-=[\]{}|;:,.<>?]/
 
 function getAuthHeaders() {
   const token =
     localStorage.getItem(TOKEN_KEY) || sessionStorage.getItem(TOKEN_KEY)
 
   return token ? { Authorization: `Bearer ${token}` } : {}
+}
+
+function isValidPassword(value) {
+  const trimmedPassword = value.trim()
+  const nonWhitespacePassword = trimmedPassword.replace(/\s/g, '')
+
+  return (
+    trimmedPassword.length >= 8 &&
+    nonWhitespacePassword.length >= 8 &&
+    /[0-9]/.test(trimmedPassword) &&
+    PASSWORD_SPECIAL_CHARACTER_PATTERN.test(trimmedPassword) &&
+    /[A-Z]/.test(trimmedPassword)
+  )
 }
 
 function PasswordInput({ id, label, value, onChange, visible, onToggle }) {
@@ -191,8 +207,8 @@ export default function Settings() {
     setPasswordError('')
     setPasswordMessage('')
 
-    if (newPassword.length < 8) {
-      setPasswordError('New password must be at least 8 characters.')
+    if (!isValidPassword(newPassword)) {
+      setPasswordError(PASSWORD_STRENGTH_ERROR)
       return
     }
 
@@ -219,9 +235,14 @@ export default function Settings() {
       setPasswordMessage('Password changed successfully.')
     } catch (submitError) {
       const status = submitError?.response?.status
+      const message = submitError?.response?.data?.detail
+      const passwordStrengthMessage = message?.startsWith('Password must')
+        ? message
+        : ''
       setPasswordError(
         status === 400
-          ? 'Password change is not available for Google sign-in accounts.'
+          ? passwordStrengthMessage ||
+              'Password change is not available for Google sign-in accounts.'
           : 'Current password is incorrect or the password could not be changed.',
       )
     } finally {

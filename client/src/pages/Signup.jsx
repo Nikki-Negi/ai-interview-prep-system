@@ -8,11 +8,107 @@ import { useAuth } from '../context/AuthContext'
 
 const EMAIL_PATTERN =
   /^[a-z0-9](?:[a-z0-9._+-]*[a-z0-9])?@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
+const PASSWORD_SPECIAL_CHARACTER_PATTERN = /[!@#$%^&*()_+\-=[\]{}|;:,.<>?]/
+const PASSWORD_REQUIREMENTS_HELPER =
+  '8+ characters, not mostly spaces, 1 uppercase, 1 number, 1 special character'
+const SIGNUP_EMPTY_FIELD_ERRORS = {
+  name: 'Please enter your name',
+  email: 'Please enter email address',
+  password: 'Please enter password',
+  confirmPassword: 'Please confirm your password',
+}
 
 function isValidEmail(value) {
   const [localPart] = value.split('@')
 
   return value.length < 254 && localPart.length < 64 && EMAIL_PATTERN.test(value)
+}
+
+function getEmailValidationError(rawValue) {
+  if (/[A-Z]/.test(rawValue)) {
+    return 'Email must not contain capital letters'
+  }
+
+  const value = rawValue.toLowerCase()
+  const [localPart] = value.split('@')
+
+  if (localPart && /^[0-9]/.test(localPart)) {
+    return 'Email must start with a letter'
+  }
+
+  if (!isValidEmail(value)) {
+    return 'Enter a valid email address'
+  }
+
+  return ''
+}
+
+function formatPasswordRequirements(requirements) {
+  if (requirements.length === 1) {
+    return requirements[0]
+  }
+
+  if (requirements.length === 2) {
+    return `${requirements[0]} and ${requirements[1]}`
+  }
+
+  return `${requirements.slice(0, -1).join(', ')}, and ${requirements.at(-1)}`
+}
+
+function getMissingPasswordRequirements(value) {
+  const trimmedPassword = value.trim()
+  const nonWhitespacePassword = trimmedPassword.replace(/\s/g, '')
+  const missingRequirements = []
+
+  if (trimmedPassword.length < 8) {
+    missingRequirements.push('be at least 8 characters')
+  }
+
+  if (nonWhitespacePassword.length < 8) {
+    missingRequirements.push('not consist mainly of spaces')
+  }
+
+  if (!/[0-9]/.test(trimmedPassword)) {
+    missingRequirements.push('include at least one number')
+  }
+
+  if (!PASSWORD_SPECIAL_CHARACTER_PATTERN.test(trimmedPassword)) {
+    missingRequirements.push('include at least one special character')
+  }
+
+  if (!/[A-Z]/.test(trimmedPassword)) {
+    missingRequirements.push('include at least one uppercase letter')
+  }
+
+  return missingRequirements
+}
+
+function getPasswordValidationError(value, email = '') {
+  const missingRequirements = getMissingPasswordRequirements(value)
+  const normalizedPassword = value.trim().toLowerCase()
+  const normalizedEmail = email.trim().toLowerCase()
+
+  if (normalizedEmail && normalizedPassword === normalizedEmail) {
+    return 'Password must not be the same as email.'
+  }
+
+  if (!missingRequirements.length) {
+    return ''
+  }
+
+  return `Password must ${formatPasswordRequirements(missingRequirements)}.`
+}
+
+function getNameValidationError(value, email = '') {
+  if (email.trim() && value.trim().toLowerCase() === email.trim().toLowerCase()) {
+    return 'Name must not be the same as email.'
+  }
+
+  if (!/^[A-Za-z\s]+$/.test(value)) {
+    return 'Name must contain only letters'
+  }
+
+  return ''
 }
 
 export default function Signup() {
@@ -37,24 +133,79 @@ export default function Signup() {
     navigate('/dashboard')
   }
 
+  const setSignupEmptyErrors = (nextValues) => {
+    const emptyFields = {
+      name: !nextValues.name.trim(),
+      email: !nextValues.email.trim(),
+      password: !nextValues.password.trim(),
+      confirmPassword: !nextValues.confirmPassword.trim(),
+    }
+    const emptyCount = Object.values(emptyFields).filter(Boolean).length
+
+    if (!emptyCount) {
+      setError('')
+      setNameError('')
+      setEmailError('')
+      setPasswordError('')
+      setConfirmPasswordError('')
+      return false
+    }
+
+    if (emptyCount === Object.keys(emptyFields).length) {
+      setError('Please fill all the fields')
+      setNameError('')
+      setEmailError('')
+      setPasswordError('')
+      setConfirmPasswordError('')
+      return true
+    }
+
+    setError('')
+    setNameError(emptyFields.name ? SIGNUP_EMPTY_FIELD_ERRORS.name : '')
+    setEmailError(emptyFields.email ? SIGNUP_EMPTY_FIELD_ERRORS.email : '')
+    setPasswordError(emptyFields.password ? SIGNUP_EMPTY_FIELD_ERRORS.password : '')
+    setConfirmPasswordError(
+      emptyFields.confirmPassword ? SIGNUP_EMPTY_FIELD_ERRORS.confirmPassword : '',
+    )
+    return true
+  }
+
+  const hasSignupEmptyErrors = () =>
+    error === 'Please fill all the fields' ||
+    nameError === SIGNUP_EMPTY_FIELD_ERRORS.name ||
+    emailError === SIGNUP_EMPTY_FIELD_ERRORS.email ||
+    passwordError === SIGNUP_EMPTY_FIELD_ERRORS.password ||
+    confirmPasswordError === SIGNUP_EMPTY_FIELD_ERRORS.confirmPassword
+
+  const updateSignupEmptyErrorsIfVisible = (nextValues) => {
+    if (hasSignupEmptyErrors()) {
+      setSignupEmptyErrors(nextValues)
+    }
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const normalizedEmail = email.toLowerCase()
     let hasValidationError = false
 
-    if (!/^[A-Za-z\s]+$/.test(name)) {
-      setNameError('Name must contain only letters')
+    if (setSignupEmptyErrors({ name, email, password, confirmPassword })) {
+      return
+    }
+
+    const nextNameError = getNameValidationError(name, email)
+    if (nextNameError) {
+      setNameError(nextNameError)
       hasValidationError = true
     }
 
-    if (!isValidEmail(normalizedEmail)) {
-      setEmail(normalizedEmail)
-      setEmailError('Enter a valid email address')
+    const nextEmailError = getEmailValidationError(email)
+    if (nextEmailError) {
+      setEmailError(nextEmailError)
       hasValidationError = true
     }
 
-    if (password.length < 8) {
-      setPasswordError('Password must be at least 8 characters')
+    const nextPasswordError = getPasswordValidationError(password, email)
+    if (nextPasswordError) {
+      setPasswordError(nextPasswordError)
       hasValidationError = true
     }
 
@@ -64,11 +215,13 @@ export default function Signup() {
     }
 
     if (hasValidationError) {
+      setError('')
       return
     }
 
     setLoading(true)
     setError('')
+    const normalizedEmail = email.toLowerCase()
 
     try {
       await registerUser(name, normalizedEmail, password)
@@ -135,8 +288,20 @@ export default function Signup() {
               type="text"
               value={name}
               onChange={(event) => {
-                setName(event.target.value)
-                setNameError('')
+                const nextName = event.target.value
+
+                setName(nextName)
+                if (hasSignupEmptyErrors()) {
+                  updateSignupEmptyErrorsIfVisible({
+                    name: nextName,
+                    email,
+                    password,
+                    confirmPassword,
+                  })
+                } else {
+                  setError('')
+                  setNameError('')
+                }
               }}
               className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
               placeholder="Your name"
@@ -153,8 +318,20 @@ export default function Signup() {
               type="email"
               value={email}
               onChange={(event) => {
-                setEmail(event.target.value.toLowerCase())
-                setEmailError('')
+                const nextEmail = event.target.value
+
+                setEmail(nextEmail)
+                if (hasSignupEmptyErrors()) {
+                  updateSignupEmptyErrorsIfVisible({
+                    name,
+                    email: nextEmail,
+                    password,
+                    confirmPassword,
+                  })
+                } else {
+                  setError('')
+                  setEmailError('')
+                }
               }}
               className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
               placeholder="you@example.com"
@@ -173,9 +350,21 @@ export default function Signup() {
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(event) => {
-                  setPassword(event.target.value)
-                  setPasswordError('')
-                  setConfirmPasswordError('')
+                  const nextPassword = event.target.value
+
+                  setPassword(nextPassword)
+                  if (hasSignupEmptyErrors()) {
+                    updateSignupEmptyErrorsIfVisible({
+                      name,
+                      email,
+                      password: nextPassword,
+                      confirmPassword,
+                    })
+                  } else {
+                    setError('')
+                    setPasswordError('')
+                    setConfirmPasswordError('')
+                  }
                 }}
                 className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-3 pr-12 text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
                 placeholder="Create a password"
@@ -203,6 +392,7 @@ export default function Signup() {
                 )}
               </button>
             </div>
+            <p className="mt-2 text-xs text-gray-500">{PASSWORD_REQUIREMENTS_HELPER}</p>
             {passwordError ? <p className="mt-2 text-sm text-red-700">{passwordError}</p> : null}
           </div>
 
@@ -219,8 +409,20 @@ export default function Signup() {
                 type={showConfirmPassword ? 'text' : 'password'}
                 value={confirmPassword}
                 onChange={(event) => {
-                  setConfirmPassword(event.target.value)
-                  setConfirmPasswordError('')
+                  const nextConfirmPassword = event.target.value
+
+                  setConfirmPassword(nextConfirmPassword)
+                  if (hasSignupEmptyErrors()) {
+                    updateSignupEmptyErrorsIfVisible({
+                      name,
+                      email,
+                      password,
+                      confirmPassword: nextConfirmPassword,
+                    })
+                  } else {
+                    setError('')
+                    setConfirmPasswordError('')
+                  }
                 }}
                 className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-3 pr-12 text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
                 placeholder="Confirm your password"

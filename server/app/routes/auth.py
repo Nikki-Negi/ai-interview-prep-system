@@ -9,7 +9,7 @@ from jose.exceptions import ExpiredSignatureError, JWTError
 from google.auth.transport.requests import Request as GoogleRequest
 from google.oauth2 import id_token
 from passlib.context import CryptContext
-from pydantic import BaseModel, EmailStr, Field, field_validator
+from pydantic import BaseModel, EmailStr, Field, field_validator, model_validator
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 
@@ -26,24 +26,91 @@ ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_HOURS = 24
 MIN_PASSWORD_LENGTH = 8
+PASSWORD_SPECIAL_CHARACTERS = set("!@#$%^&*()_+-=[]{}|;:,.<>?")
+
+
+def format_password_requirements(requirements: list[str]) -> str:
+    if len(requirements) == 1:
+        requirement_text = requirements[0]
+    elif len(requirements) == 2:
+        requirement_text = f"{requirements[0]} and {requirements[1]}"
+    else:
+        requirement_text = f"{', '.join(requirements[:-1])}, and {requirements[-1]}"
+
+    return f"Password must {requirement_text}."
 
 
 def validate_request_email(value: str) -> str:
-    email = str(value or "").lower().strip()
+    raw_email = str(value or "").strip()
+    if any("A" <= character <= "Z" for character in raw_email):
+        raise ValueError("Email must not contain capital letters")
+
+    email = raw_email.lower()
     if len(email) > 254:
         raise ValueError("Email must be 254 characters or fewer")
+    local_part = email.split("@", 1)[0]
+    if local_part and not ("a" <= local_part[0] <= "z"):
+        raise ValueError("Email must start with a letter")
     return email
+
+
+def validate_password_strength(value: str) -> str:
+    password = str(value or "").strip()
+    non_whitespace_password = "".join(password.split())
+    missing_requirements = []
+
+    if len(password) < MIN_PASSWORD_LENGTH:
+        missing_requirements.append("be at least 8 characters")
+    if len(non_whitespace_password) < MIN_PASSWORD_LENGTH:
+        missing_requirements.append("not consist mainly of spaces")
+    if not any(character.isdigit() for character in password):
+        missing_requirements.append("include at least one number")
+    if not any(character in PASSWORD_SPECIAL_CHARACTERS for character in password):
+        missing_requirements.append("include at least one special character")
+    if not any("A" <= character <= "Z" for character in password):
+        missing_requirements.append("include at least one uppercase letter")
+
+    if missing_requirements:
+        raise ValueError(format_password_requirements(missing_requirements))
+
+    return password
 
 
 class RegisterRequest(BaseModel):
     email: EmailStr
-    password: str = Field(min_length=MIN_PASSWORD_LENGTH)
+    password: str
     name: str = Field(min_length=1, max_length=100)
+
+    @model_validator(mode="before")
+    @classmethod
+    def validate_raw_password_is_not_email(cls, data):
+        if isinstance(data, dict):
+            email = normalize_email(str(data.get("email", "")))
+            name = str(data.get("name", "")).strip().lower()
+            password = str(data.get("password", "")).strip().lower()
+            if email and name == email:
+                raise ValueError("Name must not be the same as email.")
+            if email and password == email:
+                raise ValueError("Password must not be the same as email.")
+        return data
 
     @field_validator("email", mode="before")
     @classmethod
     def validate_email(cls, value: str) -> str:
         return validate_request_email(value)
+
+    @field_validator("password")
+    @classmethod
+    def validate_password(cls, value: str) -> str:
+        return validate_password_strength(value)
+
+    @model_validator(mode="after")
+    def validate_password_is_not_email(self):
+        if normalize_email(str(self.email)) == self.name.strip().lower():
+            raise ValueError("Name must not be the same as email.")
+        if normalize_email(str(self.email)) == self.password.strip().lower():
+            raise ValueError("Password must not be the same as email.")
+        return self
 
     @field_validator("name")
     @classmethod
@@ -71,7 +138,12 @@ class GoogleLoginRequest(BaseModel):
 
 class ChangePasswordRequest(BaseModel):
     current_password: str = Field(min_length=1)
-    new_password: str = Field(min_length=MIN_PASSWORD_LENGTH)
+    new_password: str
+
+    @field_validator("new_password")
+    @classmethod
+    def validate_new_password(cls, value: str) -> str:
+        return validate_password_strength(value)
 
 
 def create_access_token(email: str):

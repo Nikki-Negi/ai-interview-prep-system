@@ -35,9 +35,31 @@ async def sanitized_validation_exception_handler(
     request: Request, exc: RequestValidationError
 ):
     print(f"VALIDATION ERROR: {exc}")
-    error_locations = [tuple(error.get("loc", ())) for error in exc.errors()]
+    errors = exc.errors()
+    error_locations = [
+        tuple(str(part) for part in error.get("loc", ())) for error in errors
+    ]
 
-    if any("password" in location for location in error_locations):
+    for error in errors:
+        location = tuple(str(part) for part in error.get("loc", ()))
+        message = str(error.get("msg", ""))
+        if "Password must" in message:
+            return JSONResponse(
+                status_code=400,
+                content={"detail": message.removeprefix("Value error, ")},
+            )
+        if any("email" in part for part in location) and "Email must" in message:
+            return JSONResponse(
+                status_code=400,
+                content={"detail": message.removeprefix("Value error, ")},
+            )
+        if "Name must" in message:
+            return JSONResponse(
+                status_code=400,
+                content={"detail": message.removeprefix("Value error, ")},
+            )
+
+    if any("password" in part for location in error_locations for part in location):
         return JSONResponse(
             status_code=400,
             content={"detail": "Password must be at least 8 characters"},

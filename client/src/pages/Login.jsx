@@ -8,11 +8,34 @@ import { useAuth } from '../context/AuthContext'
 
 const EMAIL_PATTERN =
   /^[a-z0-9](?:[a-z0-9._+-]*[a-z0-9])?@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
+const LOGIN_EMPTY_FIELD_ERRORS = {
+  email: 'Please enter email address',
+  password: 'Please enter password',
+}
 
 function isValidEmail(value) {
   const [localPart] = value.split('@')
 
   return value.length < 254 && localPart.length < 64 && EMAIL_PATTERN.test(value)
+}
+
+function getEmailValidationError(rawValue) {
+  if (/[A-Z]/.test(rawValue)) {
+    return 'Email must not contain capital letters'
+  }
+
+  const value = rawValue.toLowerCase()
+  const [localPart] = value.split('@')
+
+  if (localPart && /^[0-9]/.test(localPart)) {
+    return 'Email must start with a letter'
+  }
+
+  if (!isValidEmail(value)) {
+    return 'Enter a valid email address'
+  }
+
+  return ''
 }
 
 export default function Login() {
@@ -26,22 +49,66 @@ export default function Login() {
   const [googleLoading, setGoogleLoading] = useState(false)
   const [error, setError] = useState('')
   const [emailError, setEmailError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
 
   const handleAuthSuccess = (authData, rememberValue = rememberMe) => {
     login(authData.access_token, authData.user, rememberValue)
     navigate('/dashboard')
   }
 
+  const setLoginEmptyErrors = (nextValues) => {
+    const emptyFields = {
+      email: !nextValues.email.trim(),
+      password: !nextValues.password.trim(),
+    }
+    const emptyCount = Object.values(emptyFields).filter(Boolean).length
+
+    if (!emptyCount) {
+      setError('')
+      setEmailError('')
+      setPasswordError('')
+      return false
+    }
+
+    if (emptyCount === Object.keys(emptyFields).length) {
+      setError('Please fill all the fields')
+      setEmailError('')
+      setPasswordError('')
+      return true
+    }
+
+    setError('')
+    setEmailError(emptyFields.email ? LOGIN_EMPTY_FIELD_ERRORS.email : '')
+    setPasswordError(emptyFields.password ? LOGIN_EMPTY_FIELD_ERRORS.password : '')
+    return true
+  }
+
+  const hasLoginEmptyErrors = () =>
+    error === 'Please fill all the fields' ||
+    emailError === LOGIN_EMPTY_FIELD_ERRORS.email ||
+    passwordError === LOGIN_EMPTY_FIELD_ERRORS.password
+
+  const updateLoginEmptyErrorsIfVisible = (nextValues) => {
+    if (hasLoginEmptyErrors()) {
+      setLoginEmptyErrors(nextValues)
+    }
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const normalizedEmail = email.toLowerCase()
 
-    if (!isValidEmail(normalizedEmail)) {
-      setEmail(normalizedEmail)
-      setEmailError('Enter a valid email address')
+    if (setLoginEmptyErrors({ email, password })) {
       return
     }
 
+    const nextEmailError = getEmailValidationError(email)
+    if (nextEmailError) {
+      setEmailError(nextEmailError)
+      setError('')
+      return
+    }
+
+    const normalizedEmail = email.toLowerCase()
     setLoading(true)
     setError('')
 
@@ -120,8 +187,15 @@ export default function Login() {
               type="email"
               value={email}
               onChange={(event) => {
-                setEmail(event.target.value.toLowerCase())
-                setEmailError('')
+                const nextEmail = event.target.value
+
+                setEmail(nextEmail)
+                if (hasLoginEmptyErrors()) {
+                  updateLoginEmptyErrorsIfVisible({ email: nextEmail, password })
+                } else {
+                  setError('')
+                  setEmailError('')
+                }
               }}
               className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
               placeholder="you@example.com"
@@ -139,7 +213,17 @@ export default function Login() {
                 id="password"
                 type={showPassword ? 'text' : 'password'}
                 value={password}
-                onChange={(event) => setPassword(event.target.value)}
+                onChange={(event) => {
+                  const nextPassword = event.target.value
+
+                  setPassword(nextPassword)
+                  if (hasLoginEmptyErrors()) {
+                    updateLoginEmptyErrorsIfVisible({ email, password: nextPassword })
+                  } else {
+                    setError('')
+                    setPasswordError('')
+                  }
+                }}
                 className="w-full rounded-md border border-gray-300 bg-gray-50 px-4 py-3 pr-12 text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
                 placeholder="Your password"
                 required
@@ -165,6 +249,7 @@ export default function Login() {
                 )}
               </button>
             </div>
+            {passwordError ? <p className="mt-2 text-sm text-red-700">{passwordError}</p> : null}
           </div>
 
           <label className="flex items-center gap-3 text-sm text-gray-500">
